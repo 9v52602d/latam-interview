@@ -52,3 +52,9 @@ variable "service_tag" {
     type = string
     description = "Service tag used to pull the image from GCR"
 }
+
+variable "dataset_table_id" {
+    type = string
+    description = "Dataset table id"
+    default = "latam-table"
+}

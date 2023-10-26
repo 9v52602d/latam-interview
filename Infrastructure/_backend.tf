@@ -4,6 +4,6 @@
 #   backend "gcs" {
 #     bucket  = "tf-state-latam-infrastructure"
 #     prefix  = "terraform/state"
-#     project = "latam-app"
+#     project = "latam"
 #   }
 # }

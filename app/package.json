@@ -4,8 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "@google-cloud/bigquery": "^5.9.0",
+    "express": "^4.17.1",
+    "pg": "^8.11.3"
+  },
+  "author": "Tomas Landaeta",
+  "license": "ISC",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  }
 }

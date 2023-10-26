@@ -8,7 +8,17 @@ resource "google_bigquery_dataset" "dataset" {
   dataset_id = var.dataset_id
   location   = var.dataset_location
 }
+# In case we want to create the table in the dataset
+# resource "google_bigquery_table" "example_table" {
+#   dataset_id = google_bigquery_dataset.example_dataset.dataset_id
+#   table_id   = var.dataset_table_id
 
+#   time_partitioning {
+#     type = "DAY"
+#   }
+
+#   schema = file("path/to/schema.json")
+# }
 resource "google_cloud_run_service" "service" {
   name     = var.service_name
   location = var.service_location
