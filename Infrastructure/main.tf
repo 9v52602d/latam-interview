@@ -12,6 +12,5 @@ module "app" {
   project_id = "latam"
   dataset_id = "latam-app-dataset"
   service_name = "latam-app-service"
-  grc_repository_url = "gcr.io/latam/latam-app/latam-app"
   service_tag = "latest"
   }

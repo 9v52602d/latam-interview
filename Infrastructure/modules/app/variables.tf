@@ -38,8 +38,9 @@ variable "service_location" {
 }
 
 variable "grc_repository_url" {
-  description = "Imagen Docker para Cloud Run (e.g., gcr.io/tu-proyecto/tu-imagen:latest)"
+  description = "Imagen Docker para Cloud Run"
   type        = string
+  default     = "gcr.io/latam/latam-app/latam-app"
 }
 
 variable "bigquery_role" {
