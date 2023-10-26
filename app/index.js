@@ -33,7 +33,7 @@ app.get('/', async (req, res) => {
             client.release();
         }
     } catch (err) {
-        res.status(500).send('Error al consultar la base de datos: ' + err.message);
+        res.status(500).send('Query database error: ' + err.message);
     }
 });
 
@@ -59,7 +59,7 @@ app.post('/data', express.json(), async (req, res) => {
 
         res.status(200).send('Data saved successfully');
     } catch (err) {
-        res.status(500).send('Error al guardar los datos: ' + err.message);
+        res.status(500).send('Error saving data: ' + err.message);
     }
 });
 

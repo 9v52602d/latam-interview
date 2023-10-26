@@ -1,40 +1,42 @@
 version: 2.1
 
 orbs:
-  gcp-cli: circleci/gcp-cli@1.8.3
   gcp-gcr: circleci/gcp-gcr@1.0.4
+  gcp-gae: circleci/gcp-gae@1.0.4
 
 jobs:
   build_and_push:
-    docker:
-      - image: cimg/base:stable
+    executor: gcp-gcr/default
     steps:
       - checkout
       - setup_remote_docker
-      - gcp-gcr/gcr-auth:
-          gcp-key: GCLOUD_SERVICE_KEY
-      - run:
-          name: Build and push Docker image
-          command: |
-            IMAGE_TAG=gcr.io/$GOOGLE_PROJECT_ID/latam-app:$CIRCLE_SHA1
-            docker build -t $IMAGE_TAG .
-            docker push $IMAGE_TAG
+      - gcp-gcr/gcr-auth
+      - run: docker build -t gcr.io/$GOOGLE_PROJECT_ID/latam-app:$CIRCLE_SHA1 .
+      - gcp-gcr/push-image:
+          image: gcr.io/$GOOGLE_PROJECT_ID/latam-app
+          tag: $CIRCLE_SHA1
 
   deploy:
-    docker:
-      - image: cimg/base:stable
+    executor: gcp-gae/default
     steps:
-      - gcp-cli/install
-      - gcp-cli/initialize-gcloud:
-          gcp-key: GCLOUD_SERVICE_KEY
       - run:
-          name: Deploy to Cloud Run
+          name: Deploy to Google Cloud Run
           command: |
             gcloud run deploy latam-app \
-              --image gcr.io/$GOOGLE_PROJECT_ID/myapp:$CIRCLE_SHA1 \
+              --image gcr.io/$GOOGLE_PROJECT_ID/latam-app:$CIRCLE_SHA1 \
               --platform managed \
               --region us-central1 \
               --allow-unauthenticated
+
+  integration_tests:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - run: npm install
+      - run:
+          name: Run Integration and Unit Tests
+          command: npm test
 
 workflows:
   build_and_deploy:
@@ -43,3 +45,6 @@ workflows:
       - deploy:
           requires:
             - build_and_push
+      - integration_tests:
+          requires:
+            - deploy
