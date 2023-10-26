@@ -13,7 +13,7 @@
 #### Solucion
 Basandome en la arquitectura de Pub/Sub ( https://ably.com/topic/pub-sub ) , se decidio usar en el Cloud Provider GCP (Google Cloud Platform) los servicios de Cloud Run (https://cloud.google.com/run/docs?hl=es-419 ), BigQuery(https://cloud.google.com/bigquery/docs/introduction?hl=es-419), Pub/Sub (https://cloud.google.com/pubsub/docs?hl=es-419) y Artifact Registry (https://cloud.google.com/artifact-registry/docs/transition/transition-from-gcr?hl=es-419), el codigo se encuentra en el directorio infrastructure
 
-Adicionalmente se agregaron scripts de pre-commit para evaluar el codigo de terraform antes que se suba el codigo al repositorio, asi nos aseguramos que esten aptos en cuanto a los estandares de desarrollo. Se sugiere ademas implementar Snyk para poder escanear el codigo de terraform para detectar vulnerabilidades en cuanto a configuraciones, asi como agregar un check para validar el formato de los commit messages para estar acorde a las conveciones establecidas por el equipo de ingenieria
+Adicionalmente se agregaron scripts de pre-commit para evaluar el codigo antes que se suba al repositorio, asi nos aseguramos que esten aptos en cuanto a los estandares de desarrollo. Se sugiere ademas implementar Snyk para poder escanear terraform para detectar vulnerabilidades en cuanto a configuraciones, asi como agregar un check para validar el formato de los commit messages para estar acorde a las conveciones establecidas por el equipo de ingenieria
 
 #### Parte 2: Aplicaciones y flujo CI/CD
 - [x] 1. API HTTP: Levantar un endpoint HTTP con lógica que lea datos de base de datos y los exponga al recibir una petición GET
@@ -22,7 +22,7 @@ Adicionalmente se agregaron scripts de pre-commit para evaluar el codigo de terr
 - [x] 4. Incluye un diagrama de arquitectura con la infraestructura del punto 1.1 y su interacción con los servicios/aplicaciones que demuestra el proceso end-to-end de ingesta hasta el consumo por la API HTTP
 
 #### Solucion
-Se ha creado una app usando NodeJS, que depende del entorno dev/prod escoge entre usar BigQuery o una db local para correr los test, se creo una imagen de docker asi como un docker-compose para levantar los servicios necesarios para permitir a los desarolladores trabajar localmente sin depender directamente de los servicios en GCP. 
+Se ha creado una app usando NodeJS, que depende del entorno dev/prod escoge entre usar BigQuery o una db local, se creo una imagen de docker asi como un docker-compose para levantar los servicios necesarios para permitir a los desarolladores trabajar localmente sin depender directamente de los servicios en GCP. 
 
 Se creo un Pipeline en Circle CI para poder hacer el Build, el push del contenedor construido al repositorio de imagenes en GCP, asi como al final hace el deploy en Cloud Run
 
